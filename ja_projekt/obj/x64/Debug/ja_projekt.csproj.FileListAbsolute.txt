@@ -1,0 +1,10 @@
+C:\Users\noob7\Documents\repo\ja_projekt\ja_projekt\bin\x64\Debug\ja_projekt.exe.config
+C:\Users\noob7\Documents\repo\ja_projekt\ja_projekt\bin\x64\Debug\ja_projekt.exe
+C:\Users\noob7\Documents\repo\ja_projekt\ja_projekt\bin\x64\Debug\ja_projekt.pdb
+C:\Users\noob7\Documents\repo\ja_projekt\ja_projekt\obj\x64\Debug\ja_projekt.csproj.AssemblyReference.cache
+C:\Users\noob7\Documents\repo\ja_projekt\ja_projekt\obj\x64\Debug\ja_projekt.csproj.SuggestedBindingRedirects.cache
+C:\Users\noob7\Documents\repo\ja_projekt\ja_projekt\obj\x64\Debug\ja_projekt.Properties.Resources.resources
+C:\Users\noob7\Documents\repo\ja_projekt\ja_projekt\obj\x64\Debug\ja_projekt.csproj.GenerateResource.cache
+C:\Users\noob7\Documents\repo\ja_projekt\ja_projekt\obj\x64\Debug\ja_projekt.csproj.CoreCompileInputs.cache
+C:\Users\noob7\Documents\repo\ja_projekt\ja_projekt\obj\x64\Debug\ja_projekt.exe
+C:\Users\noob7\Documents\repo\ja_projekt\ja_projekt\obj\x64\Debug\ja_projekt.pdb
