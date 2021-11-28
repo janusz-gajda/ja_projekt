@@ -14,7 +14,20 @@ namespace ja_projekt
     {
         public Form1()
         {
+            
             InitializeComponent();
+            label1.Text = "Test";
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            label1.Text = "Hello World!";
         }
     }
 }

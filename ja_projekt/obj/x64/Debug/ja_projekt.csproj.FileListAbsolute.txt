@@ -8,3 +8,4 @@ C:\Users\noob7\Documents\repo\ja_projekt\ja_projekt\obj\x64\Debug\ja_projekt.csp
 C:\Users\noob7\Documents\repo\ja_projekt\ja_projekt\obj\x64\Debug\ja_projekt.csproj.CoreCompileInputs.cache
 C:\Users\noob7\Documents\repo\ja_projekt\ja_projekt\obj\x64\Debug\ja_projekt.exe
 C:\Users\noob7\Documents\repo\ja_projekt\ja_projekt\obj\x64\Debug\ja_projekt.pdb
+C:\Users\noob7\Documents\repo\ja_projekt\ja_projekt\obj\x64\Debug\ja_projekt.Form1.resources
