@@ -5,7 +5,27 @@
       "ProjectGuid": "6462cd1f-7e3a-4d45-a13b-2f8c1b62846e",
       "DisplayName": "ja_projekt",
       "ColorIndex": 0
+    },
+    "085e8705-d011-4d7a-8105-2f8244c2e7df": {
+      "ProjectGuid": "085e8705-d011-4d7a-8105-2f8244c2e7df",
+      "DisplayName": "JaDllASM",
+      "ColorIndex": 1
+    },
+    "6b6c2617-46cc-459e-845c-59bd2162fac5": {
+      "ProjectGuid": "6b6c2617-46cc-459e-845c-59bd2162fac5",
+      "DisplayName": "jaLib",
+      "ColorIndex": 2
+    },
+    "e8e8de3f-ae1b-4d79-a43c-68b63229f3a3": {
+      "ProjectGuid": "e8e8de3f-ae1b-4d79-a43c-68b63229f3a3",
+      "DisplayName": "jaLibASM",
+      "ColorIndex": 3
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
     }
   },
-  "NextColorIndex": 1
+  "NextColorIndex": 4
 }
