@@ -6,17 +6,7 @@
 #include "jaLibC.h"
 #include <string>
 
-
-// This is an example of an exported variable
-JALIB_APIC int njaLib=0;
-
-// This is an example of an exported function.
-extern "C" JALIB_APIC int fnjaLib(void)
-{
-    return 0;
-}
-
-extern "C" JALIB_APIC int calculateLuhnValue(char* ptr) {
+extern "C" JALIB_APIC int calculateLuhnValueC(char* ptr) {
     int sum = 0;
     bool isSecond = false;
     for (int i = 15; i >= 0; i--) {
@@ -42,9 +32,3 @@ extern "C" JALIB_APIC int calculateLuhnValue(char* ptr) {
     
 }
 
-
-// This is the constructor of a class that has been exported.
-CjaLib::CjaLib()
-{
-    return;
-}

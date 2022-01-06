@@ -11,14 +11,5 @@
 #include <string>
 
 // This class is exported from the dll
-class JALIB_APIC CjaLib {
-public:
-	CjaLib(void);
-	// TODO: add your methods here.
-};
 
-extern JALIB_APIC int njaLib;
-
-extern "C" JALIB_APIC int fnjaLib(void);
-
-extern "C" JALIB_APIC int calculateLuhnValue(char*);
+extern "C" JALIB_APIC int calculateLuhnValueC(char*);

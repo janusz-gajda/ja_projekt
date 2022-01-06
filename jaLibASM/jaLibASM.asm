@@ -1,6 +1,6 @@
 .code
 
-calculateLuhnValue proc
+calculateLuhnValueASM proc
 	;move string to xmm7 register
 	movups xmm7, [rcx]
 
@@ -39,7 +39,7 @@ calculateLuhnValue proc
 	zero:
 	mov rax, rdx
 	ret
-calculateLuhnValue endp
+calculateLuhnValueASM endp
 
 .data
 	ansiiOffsett db 30h, 30h, 30h, 30h, 30h, 30h, 30h, 30h, 30h, 30h, 30h, 30h, 30h, 30h, 30h, 30h

@@ -1,2 +1,2 @@
 LIBRARY jaLibASM
-EXPORTS calculateLuhnValue
+EXPORTS calculateLuhnValueASM
