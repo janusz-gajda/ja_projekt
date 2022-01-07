@@ -14,7 +14,7 @@ namespace ja_projekt
     {
 
         private ConcurrentQueue<CSV> inputList;
-        private BlockingCollection<CSV> outputList;
+        private ConcurrentQueue<CSV> outputList;
         private String sourceFilePath;
         private String targetFilePath;
         private Liblary liblary = Liblary.CPP;
@@ -23,7 +23,7 @@ namespace ja_projekt
         public ThreadManager(String sourceFilePathStr, String targetFilePathStr, Liblary newLiblary, int newThreads)
         {
             inputList = new ConcurrentQueue<CSV>();
-            outputList = new BlockingCollection<CSV>();
+            outputList = new ConcurrentQueue<CSV>();
             this.sourceFilePath = sourceFilePathStr;
             this.targetFilePath = targetFilePathStr;
             liblary = newLiblary;
@@ -69,7 +69,8 @@ namespace ja_projekt
         {
             using(StreamWriter stream = new StreamWriter(targetFilePath))
             {
-                foreach (CSV csv in outputList)
+                CSV csv;
+                while (outputList.TryDequeue(out csv))
                 {
                     stream.WriteLine(csv.ToString());
                 }
@@ -168,11 +169,11 @@ namespace ja_projekt
             }
             if(oldChecksum != calculatedChecksum)
             {
-                outputList.Add(new CSV(inputCSV.GetString(), false));
+                outputList.Enqueue(new CSV(inputCSV.GetString(), false));
             }
             else
             {
-                outputList.Add((new CSV(inputCSV.GetString(), true)));
+                outputList.Enqueue((new CSV(inputCSV.GetString(), true)));
             }
         }
 
@@ -196,11 +197,11 @@ namespace ja_projekt
             }
             if (oldChecksum != calculatedChecksum)
             {
-                outputList.Add(new CSV(inputCSV.GetString(), false));
+                outputList.Enqueue(new CSV(inputCSV.GetString(), false));
             }
             else
             {
-                outputList.Add((new CSV(inputCSV.GetString(), true)));
+                outputList.Enqueue((new CSV(inputCSV.GetString(), true)));
             }
         }
 
