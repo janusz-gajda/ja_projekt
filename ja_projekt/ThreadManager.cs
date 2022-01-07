@@ -13,7 +13,7 @@ namespace ja_projekt
     internal class ThreadManager
     {
 
-        private List<CSV> inputList;
+        private ConcurrentQueue<CSV> inputList;
         private BlockingCollection<CSV> outputList;
         private String sourceFilePath;
         private String targetFilePath;
@@ -22,7 +22,7 @@ namespace ja_projekt
 
         public ThreadManager(String sourceFilePathStr, String targetFilePathStr, Liblary newLiblary, int newThreads)
         {
-            inputList = new List<CSV>();
+            inputList = new ConcurrentQueue<CSV>();
             outputList = new BlockingCollection<CSV>();
             this.sourceFilePath = sourceFilePathStr;
             this.targetFilePath = targetFilePathStr;
@@ -86,7 +86,7 @@ namespace ja_projekt
                 line = stream.ReadLine();
                 if (line != null)
                 {
-                    inputList.Add(new CSV(line, false));
+                    inputList.Enqueue(new CSV(line, false));
                 }
             }
         }
@@ -94,52 +94,66 @@ namespace ja_projekt
 
         private void CalculateASM()
         {
-            ThreadPool.SetMaxThreads(threads, threads);
-            using (var countdownEvent = new CountdownEvent(inputList.Count))
+            List<Thread> threadsList = new List<Thread>();
+            for (int i = 0; i < threads; i++)
             {
-                foreach (var item in inputList)
-                {
-                    ThreadPool.QueueUserWorkItem(state =>
-                    {
-                        this.WorkerASM(item);
-                        countdownEvent.Signal();
-                    });
-                }
-                countdownEvent.Wait();
-                outputList.CompleteAdding();
+                threadsList.Add(new Thread(new ThreadStart(ThreadASM)));
+                threadsList[i].Start();
             }
-            
+            while (!inputList.IsEmpty)
+            {
+                Thread.Sleep(100);
+            }
+
         }
 
         private void CalculateCPP()
         {
-            ThreadPool.SetMaxThreads(threads, threads);
-            using (var countdownEvent = new CountdownEvent(inputList.Count))
+            List<Thread> threadsList = new List<Thread>();
+            for(int i = 0; i < threads; i++)
             {
-                int count = inputList.Count;
-                //for (int i = 0; i < count; i++)
-                //{
-                //    ThreadPool.QueueUserWorkItem(state =>
-                //    {
-                //        CSV csv = inputList[i];
-                //        this.WorkerCPP(csv);
-                //        countdownEvent.Signal();
-                //    }
-                //    );
-
-                //}
-                foreach (var item in inputList)
-                {
-                    ThreadPool.QueueUserWorkItem(state =>
-                    {
-                        this.WorkerCPP(item);
-                        countdownEvent.Signal();
-                    });
-                }
-                countdownEvent.Wait();
-                outputList.CompleteAdding();
+                threadsList.Add(new Thread(new ThreadStart(ThreadCPP)));
+                threadsList[i].Start();
             }
+            while (!inputList.IsEmpty)
+            {
+                Thread.Sleep(100);
+            }
+            //ThreadPool.SetMaxThreads(threads, threads);
+            //using (var countdownEvent = new CountdownEvent(inputList.Count))
+            //{
+            //    for (int i = 0; i < count; i++)
+            //    {
+            //        ThreadPool.QueueUserWorkItem(state =>
+            //        {
+            //            CSV csv = inputList[i];
+            //            this.WorkerCPP(csv);
+            //            countdownEvent.Signal();
+            //        }
+            //        );
 
+            //    }
+            //    foreach (var item in inputList)
+            //    {
+            //        ThreadPool.QueueUserWorkItem(state =>
+            //        {
+            //            this.WorkerCPP(item);
+            //            countdownEvent.Signal();
+            //        });
+            //    }
+            //    countdownEvent.Wait();
+            //    outputList.CompleteAdding();
+            //}
+
+        }
+
+        private void ThreadASM()
+        {
+            CSV local;
+            while (inputList.TryDequeue(out local))
+            {
+                WorkerASM(local);
+            }
         }
 
         private unsafe void WorkerASM(CSV inputCSV)
@@ -159,6 +173,14 @@ namespace ja_projekt
             else
             {
                 outputList.Add((new CSV(inputCSV.GetString(), true)));
+            }
+        }
+
+        private void ThreadCPP()
+        {
+            CSV local;
+            while(inputList.TryDequeue(out local)){
+                WorkerCPP(local);
             }
         }
 
