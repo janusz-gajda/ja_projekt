@@ -52,22 +52,22 @@ namespace ja_projekt
             stopWatch.Start();
             if (liblary == Liblary.ASM)
             {
-                CalculateASM();
+               CalculateASM();
             }
             else
             {
-                CalculateCPP();
+               CalculateCPP();
             }
             stopWatch.Stop();
             SaveToFile();
-            return String.Format("{0:00}:{1:00}:{2:00}.{3:000}",
+            return String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
             stopWatch.Elapsed.Hours, stopWatch.Elapsed.Minutes, stopWatch.Elapsed.Seconds,
-            stopWatch.Elapsed.Milliseconds);
+            stopWatch.Elapsed.Milliseconds / 10);
         }
 
         private void SaveToFile()
         {
-            using (StreamWriter stream = new StreamWriter(targetFilePath))
+            using(StreamWriter stream = new StreamWriter(targetFilePath))
             {
                 CSV csv;
                 while (outputList.TryDequeue(out csv))
@@ -75,7 +75,7 @@ namespace ja_projekt
                     stream.WriteLine(csv.ToString());
                 }
             }
-
+            
         }
 
         private void LoadFromFile()
@@ -103,7 +103,7 @@ namespace ja_projekt
             }
             while (!inputList.IsEmpty)
             {
-                Thread.Sleep(1);
+                Thread.Sleep(100);
             }
 
         }
@@ -111,14 +111,14 @@ namespace ja_projekt
         private void CalculateCPP()
         {
             List<Thread> threadsList = new List<Thread>();
-            for (int i = 0; i < threads; i++)
+            for(int i = 0; i < threads; i++)
             {
                 threadsList.Add(new Thread(new ThreadStart(ThreadCPP)));
                 threadsList[i].Start();
             }
             while (!inputList.IsEmpty)
             {
-                Thread.Sleep(1);
+                Thread.Sleep(100);
             }
             //ThreadPool.SetMaxThreads(threads, threads);
             //using (var countdownEvent = new CountdownEvent(inputList.Count))
@@ -159,43 +159,51 @@ namespace ja_projekt
 
         private unsafe void WorkerASM(CSV inputCSV)
         {
-            byte[] strByte = Encoding.ASCII.GetBytes(inputCSV.GetString());
-            fixed (byte* ptr = &strByte[0])
+            String strZero = inputCSV.GetStringWithZero();
+            int oldChecksum = inputCSV.GetChecksum();
+            int calculatedChecksum;
+            byte[] str = Encoding.ASCII.GetBytes(strZero);
+            fixed (byte* ptr = &str[0])
             {
-                if (Program.calculateLuhnValueASM(ptr) == 0)
-                {
-                    outputList.Enqueue(new CSV(inputCSV.GetString(), true));
-                }
-                else
-                {
-                    outputList.Enqueue((new CSV(inputCSV.GetString(), false)));
-                }
+                calculatedChecksum = Program.calculateLuhnValueASM(ptr);
+            }
+            if(oldChecksum != calculatedChecksum)
+            {
+                outputList.Enqueue(new CSV(inputCSV.GetString(), false));
+            }
+            else
+            {
+                outputList.Enqueue((new CSV(inputCSV.GetString(), true)));
             }
         }
 
         private void ThreadCPP()
         {
             CSV local;
-            while (inputList.TryDequeue(out local))
-            {
+            while(inputList.TryDequeue(out local)){
                 WorkerCPP(local);
             }
         }
 
         private unsafe void WorkerCPP(CSV inputCSV)
         {
-            byte[] strByte = Encoding.ASCII.GetBytes(inputCSV.GetString());
-            fixed (byte* ptr = &strByte[0])
+            String strZero = inputCSV.GetStringWithZero();
+            int oldChecksum = inputCSV.GetChecksum();
+            int calculatedChecksum;
+            byte[] str = Encoding.ASCII.GetBytes(strZero);
+            fixed (byte* ptr = &str[0])
             {
-                if (Program.calculateLuhnValueC(ptr) == 0)
-                {
-                    outputList.Enqueue(new CSV(inputCSV.GetString(), true));
-                }
-                else
-                {
-                    outputList.Enqueue((new CSV(inputCSV.GetString(), false)));
-                }
+                calculatedChecksum = Program.calculateLuhnValueC(ptr);
+            }
+            if (oldChecksum != calculatedChecksum)
+            {
+                outputList.Enqueue(new CSV(inputCSV.GetString(), false));
+            }
+            else
+            {
+                outputList.Enqueue((new CSV(inputCSV.GetString(), true)));
             }
         }
+
     }
 }

@@ -9,12 +9,12 @@ namespace ja_projekt
     internal class CSV
     {
         private string str;
-        private bool validLuhn = false;
+        private bool luhn = false;
 
-        public CSV(String newStr, Boolean newValidLuhn)
+        public CSV(String newStr, Boolean newLuhn)
         {
             this.SetString(newStr);
-            this.SetValidLuhn(newValidLuhn);
+            this.SetLuhn(newLuhn);
         }
 
         public void SetString(String newStr)
@@ -39,19 +39,29 @@ namespace ja_projekt
             return this.str;
         }
 
-        public void SetValidLuhn(Boolean newValidLuhn)
+        public void SetLuhn(Boolean newLuhn)
         {
-            this.validLuhn = newValidLuhn;
+            this.luhn = newLuhn;
         }
 
-        public Boolean GetValidLuhn()
+        public Boolean GetLuhn()
         {
-            return this.validLuhn;
+            return this.luhn;
+        }
+
+        public int GetChecksum()
+        {
+            return Int32.Parse(this.str.Substring(15, 1));
+        }
+
+        public String GetStringWithZero()
+        {
+            return this.str.Substring(0, 15) + '0';
         }
 
         override public String ToString()
         {
-            return this.str + ", " + this.validLuhn.ToString();
+            return this.str + ", " + this.luhn.ToString();
         }
     }
 }
