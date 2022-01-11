@@ -29,14 +29,6 @@ calculateLuhnValueASM proc
 	add rax, rbx
 	mov rdx, 0
 	div qword ptr [ten]
-	add rdx, 0
-	jz zero
-
-	mov rax, 10
-	sub rax, rdx
-	ret
-
-	zero:
 	mov rax, rdx
 	ret
 calculateLuhnValueASM endp

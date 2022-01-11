@@ -167,11 +167,11 @@
             // timeLabel
             // 
             this.timeLabel.AutoSize = true;
-            this.timeLabel.Location = new System.Drawing.Point(360, 338);
+            this.timeLabel.Location = new System.Drawing.Point(357, 340);
             this.timeLabel.Name = "timeLabel";
-            this.timeLabel.Size = new System.Drawing.Size(64, 13);
+            this.timeLabel.Size = new System.Drawing.Size(70, 13);
             this.timeLabel.TabIndex = 20;
-            this.timeLabel.Text = "00:00:00.00";
+            this.timeLabel.Text = "00:00:00.000";
             // 
             // Form1
             // 
@@ -190,7 +190,7 @@
             this.Controls.Add(this.sourceFileChooseButton);
             this.Controls.Add(this.groupBox1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Luhn Validator";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.threadsSlider)).EndInit();

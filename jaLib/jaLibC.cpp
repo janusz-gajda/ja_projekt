@@ -16,19 +16,17 @@ extern "C" JALIB_APIC int calculateLuhnValueC(char* ptr) {
         }
         isSecond = !isSecond;
         /*
-        sum += digit / 10;
-        sum += digit % 10;
+        if(digit > 9){
+            digit %= 10;
+            digit += 1;
+        }
         */
-        //Alternative
         if (digit > 9) {
             digit -= 9;
         }
         sum += digit;
     }
-    sum %= 10;
-    if (sum == 0)
-        return 0;
-    return 10 - sum;
+    return sum % 10;
     
 }
 
